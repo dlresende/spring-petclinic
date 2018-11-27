@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+set -e
+
+[ -z "${DEBUG:-}" ] || set -x
+
+: "${PETCLINIC_HOST:?}"
+: "${PETCLINIC_PORT:?}"
+
+BASE_DIR="$(cd "$(dirname "$0")/../../.." && pwd)"
+
+main() {
+  check_dependencies \
+    jmeter \
+
+    jmeter -n -t "$BASE_DIR/src/test/jmeter/petclinic_test_plan.jmx" -l "$BASE_DIR/target/log.jtl" -j "$BASE_DIR/target/jmeter.log"
+}
+
+check_dependencies() {
+  for bin in "$@"
+  do
+    if ! command -v "$bin" > /dev/null
+    then
+      echo "$bin required, but not found in PATH."
+      exit 1
+    fi
+  done
+}
+
+main
