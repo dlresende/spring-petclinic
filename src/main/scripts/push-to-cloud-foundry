@@ -12,13 +12,13 @@ set -e
 
 export CF_USERNAME CF_PASSWORD
 
-main() {
-  local jar="${1:?}"
+JAR=${1:?}
 
+main() {
 	check_dependencies \
 		cf \
 
-	deploy "$jar"
+	deploy
 }
 
 check_dependencies() {
@@ -33,12 +33,10 @@ check_dependencies() {
 }
 
 deploy() {
-  local jar="${1:?}"
-
 	cf api "$CF_API"
   cf auth
 	cf target -o "$CF_ORG" -s "$CF_SPACE"
-	cf push "petclinic-$CF_SPACE" -p "$jar"
+  cf push "petclinic-$CF_SPACE" -p $JAR
 }
 
-main "${1:?}"
+main
