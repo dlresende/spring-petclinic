@@ -7,6 +7,8 @@ set -e
 : "${PETCLINIC_HOST:?}"
 : "${PETCLINIC_PORT:?}"
 
+export PETCLINIC_HOST PETCLINIC_PORT
+
 BASE_DIR="$(cd "$(dirname "$0")/../../.." && pwd)"
 
 main() {
