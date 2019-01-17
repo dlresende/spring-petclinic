@@ -36,7 +36,7 @@ deploy() {
 	cf api --skip-ssl-validation "$CF_API"
   cf auth
 	cf target -o "$CF_ORG" -s "$CF_SPACE"
-  cf push "petclinic-$CF_SPACE" -p $JAR
+  cf push "petclinic-$CF_SPACE" -p $JAR -m "1G"
 }
 
 main
